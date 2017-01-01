@@ -1,5 +1,6 @@
 package com.two_two.android_ocr_example.di;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -17,10 +18,13 @@ import com.two_two.android_ocr_example.domain.tess.TessRecognizer;
 
 public class DependencyProvider {
 
+    @SuppressLint("StaticFieldLeak") //it's App context
     private static TessInitializator tessInitializator;
     private static TessBaseAPI tessBaseAPI;
     private static TessRecognizer tessRecognizer;
+    @SuppressLint("StaticFieldLeak") //it's App context
     private static ImageRepository imageRepository;
+    @SuppressLint("StaticFieldLeak") //it's App context
     private static LanguageCodeHelper languageCodeHelper;
 
     public static TessInitializator getTessInitializator() {
