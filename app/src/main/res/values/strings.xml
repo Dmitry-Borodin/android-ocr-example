@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Android-ocr-example</string>
+    <string name="dialog_ok_button">Ok</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="progress_bar_loading_title">Please wait</string>
+    <string name="progress_bar_initializing_tess_message">Initializing Tesseract</string>
+    <string name="progress_bar_recognizing_image_message">Recognizing text from Image</string>
+    <string name="main_activity_image_title">Image for recognition:</string>
+    <string name="main_activity_text_title">Recognized text:</string>
+    <string name="error_external_storage_unavailable">Required external storage (such as an SD card) is unavailable or corrupted.</string>
+    <string name="error_external_storage_read_only">Required external storage (such as an SD card) is unavailable for data storage.</string>
+    <string name="error_external_storage_full">Required external storage (such as an SD card) is full or unavailable.</string>
+    <string name="error_external_storage_unavailable_not_visible">Required external storage (such as an SD card) is unavailable.</string>
+</resources>
