@@ -11,4 +11,5 @@
     <string name="error_external_storage_read_only">Required external storage (such as an SD card) is unavailable for data storage.</string>
     <string name="error_external_storage_full">Required external storage (such as an SD card) is full or unavailable.</string>
     <string name="error_external_storage_unavailable_not_visible">Required external storage (such as an SD card) is unavailable.</string>
+    <string name="main_activity_button_take_a_picture">Take a picture</string>
 </resources>

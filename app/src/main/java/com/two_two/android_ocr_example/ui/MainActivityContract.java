@@ -1,6 +1,6 @@
 package com.two_two.android_ocr_example.ui;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 
 /**
  * @author Dmitry Borodin on 2017-01-01.
@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 public interface MainActivityContract {
     interface View {
         void showRecognizedText(String text);
-        void showAnalyzedImage(Drawable image);
+        void showAnalyzedImage(Bitmap image);
         void dismissProgressBar();
         void showInitTessProgressBar();
         void showRecognizingProgressBar();
@@ -19,5 +19,6 @@ public interface MainActivityContract {
     interface Presenter {
         void onViewResumed();
         void onViewDestroyed();
+        void onNewImageTaken(Bitmap newimage);
     }
 }

@@ -25,13 +25,23 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void onViewResumed() {
+        setAndAnalyzeRecentImage();
+    }
+
+    private void setAndAnalyzeRecentImage() {
         startInitOcrEngine();
-        view.showAnalyzedImage(imageRepository.getPictureDrawableForOcr());
+        view.showAnalyzedImage(imageRepository.getPictureBitmapForOcr());
     }
 
     @Override
     public void onViewDestroyed() {
         view = null;
+    }
+
+    @Override
+    public void onNewImageTaken(Bitmap newimage) {
+        imageRepository.setMostRecentPicture(newimage);
+        setAndAnalyzeRecentImage();
     }
 
     private void startInitOcrEngine() {

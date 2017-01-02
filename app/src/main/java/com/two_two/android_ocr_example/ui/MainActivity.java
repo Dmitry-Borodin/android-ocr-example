@@ -2,9 +2,14 @@ package com.two_two.android_ocr_example.ui;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +20,14 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @BindView(R.id.main_activity_image_view)
     ImageView imageView;
     @BindView(R.id.main_activity_text_result)
     TextView textResultView;
+    @BindView(R.id.main_activity_take_picture_button)
+    Button takePictureButton;
 
     private ProgressDialog progressDialog;
     private MainActivityPresenter presenter;
@@ -29,6 +38,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         presenter = new MainActivityPresenter(this);
+        initViews();
+    }
+
+    private void initViews() {
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestCameraPicture();
+            }
+        });
+    }
+
+    private void requestCameraPicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
     @Override
@@ -58,6 +84,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         showProgressDialog(message);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            presenter.onNewImageTaken(imageBitmap);
+        }
+    }
+
     private void showProgressDialog(String message) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(getString(R.string.progress_bar_loading_title));
@@ -73,8 +108,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    public void showAnalyzedImage(Drawable image) {
-        imageView.setImageDrawable(image);
+    public void showAnalyzedImage(Bitmap image) {
+        imageView.setImageBitmap(image);
     }
 
     @Override

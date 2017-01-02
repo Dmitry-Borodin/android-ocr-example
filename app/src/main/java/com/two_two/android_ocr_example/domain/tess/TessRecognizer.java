@@ -21,10 +21,9 @@ public class TessRecognizer {
     }
 
     public String inspectFromBitmap(final Bitmap bitmap) {
-        tessAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+        tessAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
         tessAPI.setImage(bitmap);
         String text = tessAPI.getUTF8Text();
-        bitmap.recycle();
         return text;
     }
 
