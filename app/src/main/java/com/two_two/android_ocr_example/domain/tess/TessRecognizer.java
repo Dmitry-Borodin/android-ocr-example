@@ -2,11 +2,9 @@ package com.two_two.android_ocr_example.domain.tess;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
-import com.two_two.android_ocr_example.data.ImageRepository;
-import com.two_two.android_ocr_example.ui.MainActivity;
 
 /**
  * @author Dmitry Borodin on 2017-01-01.
@@ -15,19 +13,39 @@ import com.two_two.android_ocr_example.ui.MainActivity;
 public class TessRecognizer {
 
     private TessBaseAPI tessAPI;
+    private Bitmap previousBitmap;
+    private String recognizedText;
 
     public TessRecognizer(TessBaseAPI tessBaseAPI) {
         this.tessAPI = tessBaseAPI;
     }
 
-    public String inspectFromBitmap(final Bitmap bitmap) {
-        tessAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-        tessAPI.setImage(bitmap);
-        String text = tessAPI.getUTF8Text();
+    public String inspectFromBitmap(@NonNull final Bitmap bitmap) {
+        if (checkCache(bitmap)) return recognizedText;
+        String text = getRecognizedString(bitmap);
+        setCache(bitmap, text);
         return text;
     }
 
-    public void inspectFromBitmapAsync(final Bitmap bitmap, final RecognizedCallback callback) {
+    private String getRecognizedString(@NonNull Bitmap bitmap) {
+        tessAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+        tessAPI.setImage(bitmap);
+        return tessAPI.getUTF8Text();
+    }
+
+    private boolean checkCache(@NonNull Bitmap bitmap) {
+        if (bitmap.equals(previousBitmap)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void setCache(@NonNull Bitmap bitmap, String text) {
+        previousBitmap = bitmap;
+        recognizedText = text;
+    }
+
+    public void inspectFromBitmapAsync(@NonNull final Bitmap bitmap, final RecognizedCallback callback) {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String[] objects) {
