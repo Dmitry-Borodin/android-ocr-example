@@ -20,6 +20,20 @@ public class TessRecognizer {
         this.tessAPI = tessBaseAPI;
     }
 
+    public void inspectFromBitmapAsync(@NonNull final Bitmap bitmap, final RecognizedCallback callback) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String[] objects) {
+                return inspectFromBitmap(bitmap);
+            }
+
+            @Override
+            protected void onPostExecute(String text) {
+                callback.onRecognized(text);
+            }
+        }.execute();
+    }
+
     public String inspectFromBitmap(@NonNull final Bitmap bitmap) {
         if (checkCache(bitmap)) return recognizedText;
         String text = getRecognizedString(bitmap);
@@ -44,21 +58,6 @@ public class TessRecognizer {
         previousBitmap = bitmap;
         recognizedText = text;
     }
-
-    public void inspectFromBitmapAsync(@NonNull final Bitmap bitmap, final RecognizedCallback callback) {
-        new AsyncTask<String, String, String>() {
-            @Override
-            protected String doInBackground(String[] objects) {
-                return inspectFromBitmap(bitmap);
-            }
-
-            @Override
-            protected void onPostExecute(String text) {
-            callback.onRecognized(text);
-            }
-        }.execute();
-    }
-
 
     public interface RecognizedCallback {
         void onRecognized(String result);
