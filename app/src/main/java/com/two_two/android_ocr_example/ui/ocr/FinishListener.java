@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.two_two.android_ocr_example.ui;
+package com.two_two.android_ocr_example.ui.ocr;
 
 
 import android.app.Activity;

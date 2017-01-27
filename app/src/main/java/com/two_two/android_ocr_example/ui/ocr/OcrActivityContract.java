@@ -1,4 +1,4 @@
-package com.two_two.android_ocr_example.ui;
+package com.two_two.android_ocr_example.ui.ocr;
 
 import android.graphics.Bitmap;
 
@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * @author Dmitry Borodin on 2017-01-01.
  */
 
-public interface MainActivityContract {
+public interface OcrActivityContract {
     interface View {
         void showRecognizedText(String text);
         void showAnalyzedImage(Bitmap image);

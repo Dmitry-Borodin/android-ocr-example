@@ -1,4 +1,4 @@
-package com.two_two.android_ocr_example.ui;
+package com.two_two.android_ocr_example.ui.ocr;
 
 import android.graphics.Bitmap;
 
@@ -13,12 +13,12 @@ import com.two_two.android_ocr_example.utils.Constants;
  * @author Dmitry Borodin on 2017-01-01.
  */
 
-public class MainActivityPresenter implements MainActivityContract.Presenter {
+public class OcrActivityPresenter implements OcrActivityContract.Presenter {
 
-    private MainActivityContract.View view;
+    private OcrActivityContract.View view;
     private ImageRepository imageRepository;
 
-    public MainActivityPresenter(MainActivityContract.View view) {
+    public OcrActivityPresenter(OcrActivityContract.View view) {
         this.view = view;
         imageRepository = DependencyProvider.getImageRepository();
     }

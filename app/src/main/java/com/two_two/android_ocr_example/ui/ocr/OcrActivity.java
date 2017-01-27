@@ -1,4 +1,4 @@
-package com.two_two.android_ocr_example.ui;
+package com.two_two.android_ocr_example.ui.ocr;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.two_two.android_ocr_example.R;
+import com.two_two.android_ocr_example.ui.markers.MarksRecognitionActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
+public class OcrActivity extends AppCompatActivity implements OcrActivityContract.View {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -27,16 +28,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     TextView textResultView;
     @BindView(R.id.main_activity_take_picture_button)
     Button takePictureButton;
+    @BindView(R.id.main_activity_go_to_markers)
+    Button goToMarkersButton;
 
     private ProgressDialog progressDialog;
-    private MainActivityPresenter presenter;
+    private OcrActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        presenter = new MainActivityPresenter(this);
+        presenter = new OcrActivityPresenter(this);
         initViews();
     }
 
@@ -45,6 +48,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             @Override
             public void onClick(View view) {
                 requestCameraPicture();
+            }
+        });
+        goToMarkersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OcrActivity.this, MarksRecognitionActivity.class);
+                startActivity(intent);
             }
         });
     }
